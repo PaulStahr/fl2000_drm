@@ -231,7 +231,8 @@ struct drm_gem_object *fl2000_gem_prime_import_sg_table(struct drm_device *drm,
 		goto error;
 	}
 
-	ret = drm_prime_sg_to_dma_addr_array(sgt, obj->pages, NULL, obj->num_pages);
+	#ret = drm_prime_sg_to_dma_addr_array(sgt, obj->pages, NULL, obj->num_pages);
+	ret = drm_prime_sg_to_dma_addr_array(sgt, obj->pages, obj->num_pages);
 	if (ret < 0) {
 		kvfree(obj->pages);
 		goto error;
