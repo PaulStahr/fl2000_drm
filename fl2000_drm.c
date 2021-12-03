@@ -126,11 +126,11 @@ static struct drm_driver fl2000_drm_driver = {
 	.dumb_create = fl2000_gem_dumb_create,
 
 	.gem_create_object = fl2000_gem_create_object_default_funcs,
-	.gem_free_object_unlocked = fl2000_gem_free,
-	.gem_vm_ops = &fl2000_gem_vm_ops,
-	.gem_prime_get_sg_table = fl2000_gem_prime_get_sg_table,
-	.gem_prime_vmap = fl2000_gem_prime_vmap,
-	.gem_prime_vunmap = fl2000_gem_prime_vunmap,
+	//.gem_free_object_unlocked = fl2000_gem_free,
+	//.gem_vm_ops = &fl2000_gem_vm_ops,
+	//.gem_prime_get_sg_table = fl2000_gem_prime_get_sg_table,
+	//.gem_prime_vmap = fl2000_gem_prime_vmap,
+	//.gem_prime_vunmap = fl2000_gem_prime_vunmap,
 
 	.name = DRM_DRIVER_NAME,
 	.desc = DRM_DRIVER_DESC,
@@ -401,7 +401,7 @@ static const struct drm_simple_display_pipe_funcs fl2000_display_funcs = {
 	.disable = fl2000_display_disable,
 	.check = fl2000_display_check,
 	.update = fl2000_display_update,
-	.prepare_fb = drm_gem_fb_simple_display_pipe_prepare_fb,
+	//.prepare_fb = drm_gem_fb_simple_display_pipe_prepare_fb,
 };
 
 static void fl2000_output_mode_set(struct drm_encoder *encoder, struct drm_display_mode *mode,

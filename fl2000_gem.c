@@ -13,6 +13,13 @@
 
 #include "fl2000.h"
 
+
+#include <linux/bitops.h>
+#include <linux/swap.h>
+#include <linux/dma-buf.h>
+#include <linux/pagemap.h>
+#include <linux/version.h>
+
 static void fl2000_gem_free_object(struct drm_gem_object *gem_obj)
 {
 	struct fl2000_gem_object *obj;
@@ -231,8 +238,9 @@ struct drm_gem_object *fl2000_gem_prime_import_sg_table(struct drm_device *drm,
 		goto error;
 	}
 
-	#ret = drm_prime_sg_to_dma_addr_array(sgt, obj->pages, NULL, obj->num_pages);
-	ret = drm_prime_sg_to_dma_addr_array(sgt, obj->pages, obj->num_pages);
+	// PelliX: this is deprecated in kernel 5.13, need to work around it
+	//ret = drm_prime_sg_to_dma_addr_array(sgt, obj->pages, size);
+	ret = drm_prime_sg_to_page_array(sgt, obj->pages, obj->num_pages >> PAGE_SHIFT);
 	if (ret < 0) {
 		kvfree(obj->pages);
 		goto error;
@@ -268,8 +276,8 @@ static const struct drm_gem_object_funcs fl2000_gem_default_funcs = {
 	.free = fl2000_gem_free,
 	.print_info = fl2000_gem_print_info,
 	.get_sg_table = fl2000_gem_prime_get_sg_table,
-	.vmap = fl2000_gem_prime_vmap,
-	.vunmap = fl2000_gem_prime_vunmap,
+	//.vmap = fl2000_gem_prime_vmap,
+	//.vunmap = fl2000_gem_prime_vunmap,
 	.vm_ops = &fl2000_gem_vm_ops,
 };
 

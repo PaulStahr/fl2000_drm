@@ -1,3 +1,5 @@
+CFLAGS += -Iinclude/drm $(EL8FLAG) -DCONFIG_DRM_LEGACY
+
 fl2000-y := \
 	fl2000_drv.o \
 	fl2000_registers.o \
@@ -18,7 +20,7 @@ KSRC ?= /lib/modules/$(KVER)/build
 all:	modules
 
 modules:
-	make CHECK="/usr/bin/sparse" -C $(KSRC) M=$(PWD) modules
+	make CFLAGS="-Iinclude/drm $(EL8FLAG) -DCONFIG_DRM_LEGACY" CHECK="/usr/bin/sparse" -C $(KSRC) M=$(PWD) modules
 
 clean:
 	make -C $(KSRC) M=$(PWD) clean
